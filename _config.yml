@@ -34,7 +34,7 @@ sass:
 # Specify the author for blog posts
 author:
   name: vordenken
-  url: https://twitter.com/vordenken
+  url: https://fosstodon.org/web/@vordenken
   email: 
 
 # Custom vars
