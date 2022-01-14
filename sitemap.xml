@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+<url>
+  <loc>https://vdlab.de/</loc>
+  <lastmod>2022-01-14T14:13:20+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://vdlab.de/archive/</loc>
+  <lastmod>2022-01-14T14:13:20+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://vdlab.de/about/</loc>
+  <lastmod>2022-01-14T14:13:20+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://vdlab.de/myfav/2022/01/14/my-favourite-safari-extensions/</loc>
+  <lastmod>2022-01-14T14:13:20+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://vdlab.de/page2/</loc>
+  <lastmod>2022-01-14T14:13:20+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://vdlab.de/myfav/2022/01/06/my-favourite-macos-apps-2022-m1-edition/</loc>
+  <lastmod>2022-01-14T14:13:20+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
+</urlset>
