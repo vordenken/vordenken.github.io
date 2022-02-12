@@ -16,6 +16,6 @@ English isn't my native language so please bare with me! :-)
 
 - Notebook: Macbook Air M1 2020 (16GB Ram, 512GB SSD)
 - Phone: iPhone 12 Pro
-- 3D Printer: Ender 3 Pro with added BLTouch and other small refinements.
-- Other Stuff: raspberry pi's for my "homelab" with services like adblocker, octoprint (Dashboard for my 3d printer), wireguard vpn and more - Might make a blogpost about it in the future!
+- 3D Printer: Ender 3 Pro with added BLTouch and other small refinements. [Link to my firmware on Github](https://github.com/vordenken/Marlin-2.0.9.3)
+- Other Stuff: raspberry pi's for my "homelab" with services like adblocker, octoprint (Dashboard for my 3d printer), wireguard vpn and more - Might make a blogpost about it in the future! [Link to my docker-swarm config on Github](https://github.com/vordenken/docker_swarm)
 
