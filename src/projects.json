@@ -1,0 +1,340 @@
+[
+  {
+    "id": "silentio",
+    "name": "Silentio",
+    "platform": "macOS",
+    "title": [
+      "Kopfhörer weg.\nRuhe bleibt.",
+      "Headphones off.\nQuiet stays."
+    ],
+    "description": [
+      "Silentio schaltet die eingebauten Lautsprecher stumm, wenn deine Kopfhörer getrennt werden oder dein Mac aufwacht. Musik kann dabei automatisch pausieren.",
+      "Silentio mutes your built-in speakers when headphones disconnect or your Mac wakes. It can automatically pause your music, too."
+    ],
+    "short": [
+      "Damit dein Mac nicht plötzlich laut wird.",
+      "So your Mac doesn’t suddenly get loud."
+    ],
+    "features": [
+      [
+        "Ruhe beim Trennen",
+        "Quiet on disconnect",
+        "Reagiert, wenn dein Mac von Kopfhörern auf eingebaute Lautsprecher wechselt.",
+        "Responds when your Mac switches from headphones to its built-in speakers."
+      ],
+      [
+        "Musik pausieren",
+        "Pause your music",
+        "Kann laufende Wiedergabe in Spotify, Apple Music und VLC pausieren.",
+        "Can pause playing music in Spotify, Apple Music, and VLC."
+      ],
+      [
+        "Wieder verbinden",
+        "Reconnect",
+        "Stellt den vorherigen Lautsprecherzustand wieder her, ohne die Kopfhörerlautstärke zu ändern.",
+        "Restores the previous speaker state without changing headphone volume."
+      ]
+    ],
+    "steps": [
+      [
+        "Silentio aus der neuesten GitHub-Version installieren.",
+        "Install Silentio from the latest GitHub release."
+      ],
+      [
+        "Die kurze Einrichtung durchlaufen und die Überwachung aktivieren.",
+        "Complete the short setup and enable monitoring."
+      ],
+      [
+        "Für die Musikpause die abgefragte Automation erlauben.",
+        "Allow the requested Automation permission to pause music."
+      ]
+    ],
+    "requirements": [
+      "Ab macOS 13. Apple Silicon und Intel.",
+      "macOS 13 or later. Apple silicon and Intel."
+    ],
+    "repo": "Silentio"
+  },
+  {
+    "id": "coretamer",
+    "name": "CoreTamer",
+    "platform": "macOS",
+    "title": [
+      "Wenn eine App\nzu viel will.",
+      "When an app\nwants too much."
+    ],
+    "description": [
+      "Gib CPU-hungrigen Apps ein Limit. Direkt aus der Menüleiste, für einzelne Prozesse oder mit einem gemeinsamen Budget für die gesamte App-Gruppe.",
+      "Give CPU-hungry apps a limit. Right from your menu bar, for individual processes or with one shared budget for an entire app group."
+    ],
+    "short": [
+      "CPU-hungrige Apps im Griff.",
+      "Keep CPU-hungry apps in check."
+    ],
+    "features": [
+      [
+        "Ein Prozess oder die ganze App",
+        "One process or the whole app",
+        "Begrenze einen Prozess oder die App mitsamt ihren zugeordneten Helfern.",
+        "Limit one process or an app together with its attributed helpers."
+      ],
+      [
+        "Direkt in der Menüleiste",
+        "Right in your menu bar",
+        "Suche Prozesse und passe ihre CPU-Limits an einem Ort an.",
+        "Find processes and adjust their CPU limits in one place."
+      ],
+      [
+        "Für deine Prozesse",
+        "For your processes",
+        "Ohne Adminrechte. Systemprozesse und Prozesse anderer Nutzer bleiben schreibgeschützt.",
+        "No admin rights needed. System processes and other users’ processes remain read-only."
+      ]
+    ],
+    "steps": [
+      [
+        "CoreTamer aus der neuesten GitHub-Version installieren.",
+        "Install CoreTamer from the latest GitHub release."
+      ],
+      [
+        "Eine eigene App oder einen Prozess auswählen.",
+        "Select one of your apps or processes."
+      ],
+      [
+        "CPU-Limit und gewünschten Geltungsbereich festlegen.",
+        "Set the CPU limit and choose its scope."
+      ]
+    ],
+    "requirements": [
+      "Ab macOS 14. Apple Silicon und Intel.",
+      "macOS 14 or later. Apple silicon and Intel."
+    ],
+    "repo": "CoreTamer"
+  },
+  {
+    "id": "autopip",
+    "name": "AutoPiP",
+    "platform": "Safari / macOS",
+    "title": [
+      "Tab wechseln.\nDas Video kommt mit.",
+      "Switch tabs.\nYour video comes with you."
+    ],
+    "description": [
+      "AutoPiP holt laufende Videos automatisch ins Bild-in-Bild, wenn du den Tab wechselst oder zu den Kommentaren scrollst. Wechselst du zurück, kehrt das Video in den Tab zurück.",
+      "AutoPiP moves playing videos into Picture-in-Picture when you switch tabs or scroll to the comments. Return to the video tab and the video returns with you."
+    ],
+    "short": [
+      "Dein Video bleibt im Blick.",
+      "Keep your video in view."
+    ],
+    "features": [
+      [
+        "Automatisch im Blick",
+        "Automatically in view",
+        "Beim Tabwechsel oder Scrollen zu den Kommentaren bleibt das laufende Video sichtbar.",
+        "Your playing video stays visible when switching tabs or scrolling to the comments."
+      ],
+      [
+        "Du entscheidest, wo",
+        "Choose where it works",
+        "Steuere mit einer Positiv- oder Negativliste, auf welchen Websites AutoPiP aktiv ist.",
+        "Use an allowlist or blocklist to choose which websites AutoPiP works on."
+      ],
+      [
+        "Auch per Tastenkürzel",
+        "A keyboard shortcut, too",
+        "Aktiviere Bild-in-Bild bei Bedarf manuell. Das Tastenkürzel ist anpassbar.",
+        "Activate Picture-in-Picture manually when needed. The shortcut is configurable."
+      ]
+    ],
+    "steps": [
+      [
+        "AutoPiP aus der neuesten GitHub-Version installieren und einmal öffnen.",
+        "Install AutoPiP from the latest GitHub release and open it once."
+      ],
+      [
+        "AutoPiP in Safari unter Einstellungen → Erweiterungen aktivieren.",
+        "Enable AutoPiP in Safari under Settings → Extensions."
+      ],
+      [
+        "Ein Video abspielen und in einen anderen Tab wechseln.",
+        "Play a video and switch to another tab."
+      ]
+    ],
+    "requirements": [
+      "Ab macOS 13.5 und Safari 16. Die Unterstützung einzelner Videoplayer kann variieren.",
+      "macOS 13.5 and Safari 16 or later. Support varies between video players."
+    ],
+    "repo": "AutoPiP"
+  },
+  {
+    "id": "shortblock",
+    "name": "ShortBlock",
+    "platform": "Safari / macOS",
+    "title": [
+      "YouTube.\nOhne die Shorts.",
+      "YouTube.\nWithout the Shorts."
+    ],
+    "description": [
+      "ShortBlock blendet YouTube Shorts in Navigation, Feeds, Suche und Empfehlungen aus. Direkte Shorts-Seiten führen zurück zur YouTube-Startseite.",
+      "ShortBlock hides YouTube Shorts from navigation, feeds, search, and recommendations. Direct Shorts pages redirect to the YouTube homepage."
+    ],
+    "short": [
+      "Mehr Platz für deine Auswahl.",
+      "More room for your choices."
+    ],
+    "features": [
+      [
+        "Weniger Ablenkung",
+        "Fewer distractions",
+        "Entfernt Shorts-Bereiche und einzelne Shorts aus deinem Feed.",
+        "Removes Shorts shelves and individual Shorts from your feed."
+      ],
+      [
+        "Auch in der Suche",
+        "Search, too",
+        "Blendet Shorts auch in Suchergebnissen und Empfehlungen aus.",
+        "Hides Shorts in search results and recommendations, too."
+      ],
+      [
+        "Einfach umschalten",
+        "Easy to toggle",
+        "Aktiviere oder deaktiviere ShortBlock direkt im Erweiterungsfenster.",
+        "Turn ShortBlock on or off right in the extension popup."
+      ]
+    ],
+    "steps": [
+      [
+        "ShortBlock aus der neuesten GitHub-Version installieren und einmal öffnen.",
+        "Install ShortBlock from the latest GitHub release and open it once."
+      ],
+      [
+        "Die Erweiterung in den Safari-Einstellungen aktivieren.",
+        "Enable the extension in Safari settings."
+      ],
+      [
+        "YouTube öffnen und ShortBlock bei Bedarf im Popup umschalten.",
+        "Open YouTube and toggle ShortBlock in its popup when needed."
+      ]
+    ],
+    "requirements": [
+      "Ab macOS 13.5 und Safari 16. Für YouTube in Safari.",
+      "macOS 13.5 and Safari 16 or later. For YouTube in Safari."
+    ],
+    "repo": "ShortBlock"
+  },
+  {
+    "id": "varan",
+    "name": "Varan",
+    "platform": "iPhone / iPad / Mac",
+    "wip": true,
+    "title": [
+      "Dein Komodo.\nAuf deinen Geräten.",
+      "Your Komodo.\nOn your devices."
+    ],
+    "description": [
+      "Ein nativer Begleiter für deine selbst gehosteten Komodo-Umgebungen. Behalte Server, Stacks und Container im Blick und verwalte unterstützte Workloads unterwegs.",
+      "A native companion for your self-hosted Komodo environments. Keep an eye on servers, stacks, and containers, and manage supported workloads wherever you are."
+    ],
+    "short": [
+      "Deine Komodo-Umgebung, nativ.",
+      "Your Komodo environment, native."
+    ],
+    "features": [
+      [
+        "Ressourcen verwalten",
+        "Manage resources",
+        "Server, Stacks und Container ansehen und unterstützte Aktionen ausführen.",
+        "Browse servers, stacks, and containers, and perform supported actions."
+      ],
+      [
+        "Metriken und Logs",
+        "Metrics and logs",
+        "Aktivität verfolgen und Stack- oder Container-Logs durchsuchen.",
+        "Follow activity and search stack or container logs."
+      ],
+      [
+        "Mehrere Umgebungen",
+        "Multiple environments",
+        "Mehrere Instanzen verwalten; Zugangsdaten bleiben im System-Schlüsselbund.",
+        "Manage multiple instances; credentials stay in the system Keychain."
+      ]
+    ],
+    "steps": [
+      [
+        "Der aktuelle Stand ist eine Entwicklungsvorschau.",
+        "The current version is a development preview."
+      ],
+      [
+        "Quellcode und Build-Anleitung liegen auf GitHub.",
+        "Source code and build instructions are on GitHub."
+      ],
+      [
+        "Noch kein signierter öffentlicher Release.",
+        "There is no signed public release yet."
+      ]
+    ],
+    "requirements": [
+      "iOS / iPadOS 18 oder macOS 15 und eine selbst gehostete Komodo-Instanz. Varan ist ein unabhängiges Projekt.",
+      "iOS / iPadOS 18 or macOS 15 and a self-hosted Komodo instance. Varan is an independent project."
+    ],
+    "repo": "varan"
+  },
+  {
+    "id": "stimmig",
+    "name": "stimmig",
+    "platform": "macOS",
+    "wip": true,
+    "local": true,
+    "title": [
+      "Natürlich sprechen.\nFertig schreiben.",
+      "Speak naturally.\nGet ready-to-use text."
+    ],
+    "description": [
+      "Spracheingabe dort, wo dein Cursor wartet. stimmig setzt gesprochene Gedanken in Text um und kann Füllwörter, Grammatik und gesprochene Korrekturen lokal auf deinem Mac bereinigen.",
+      "Voice typing right where your cursor is waiting. stimmig turns spoken thoughts into text and can refine filler words, grammar, and spoken corrections locally on your Mac."
+    ],
+    "short": [
+      "Deine Stimme wird zu fertigem Text.",
+      "Your voice becomes ready-to-use text."
+    ],
+    "features": [
+      [
+        "Dort, wo du schreibst",
+        "Wherever you write",
+        "Diktiert in unterstützte Textfelder nativer Apps und Web-Apps.",
+        "Dictate into supported text fields in native and web apps."
+      ],
+      [
+        "Optional lokal bereinigt",
+        "Optional local refinement",
+        "Apple Intelligence kann den Text vor dem Einfügen auf deinem Mac bereinigen.",
+        "Apple Intelligence can refine the text on your Mac before insertion."
+      ],
+      [
+        "Ohne Textarchiv",
+        "No transcript archive",
+        "Kein stimmig-Konto, keine Telemetrie und kein Archiv deiner Aufnahmen oder Transkripte.",
+        "No stimmig account, telemetry, or archive of recordings and transcripts."
+      ]
+    ],
+    "steps": [
+      [
+        "Der Kernablauf wird derzeit weiterentwickelt.",
+        "The core workflow is under active development."
+      ],
+      [
+        "Es gibt noch keinen öffentlichen App-Download.",
+        "There is no public app download yet."
+      ],
+      [
+        "Vorgesehen: Shortcut drücken, sprechen, Text am Cursor einfügen.",
+        "The workflow: press a shortcut, speak, and insert text at the cursor."
+      ]
+    ],
+    "requirements": [
+      "Apple Silicon und macOS 26+. Apple Intelligence für die optionale Textbereinigung. Anforderungen können sich vor dem Release ändern.",
+      "Apple silicon and macOS 26+. Apple Intelligence for optional text refinement. Requirements may change before release."
+    ]
+  }
+]

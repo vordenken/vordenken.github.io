@@ -1,0 +1,14 @@
+{
+  "name": "vordenken-workshop",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The bilingual home for vordenken's open-source apps.",
+  "license": "GPL-3.0-only",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/check.mjs",
+    "dev": "node scripts/build.mjs && node scripts/serve.mjs"
+  },
+  "engines": { "node": ">=22" }
+}
