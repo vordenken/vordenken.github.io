@@ -4,8 +4,8 @@
     "name": "Silentio",
     "platform": "macOS",
     "title": [
-      "Kopfhörer weg.\nRuhe bleibt.",
-      "Headphones off.\nQuiet stays."
+      "Mehr Ruhe beim Wechsel deiner Audioausgabe",
+      "Keep things quiet when your audio output changes"
     ],
     "description": [
       "Silentio schaltet die eingebauten Lautsprecher stumm, wenn deine Kopfhörer getrennt werden oder dein Mac aufwacht. Musik kann dabei automatisch pausieren.",
@@ -60,8 +60,8 @@
     "name": "CoreTamer",
     "platform": "macOS",
     "title": [
-      "Wenn eine App\nzu viel will.",
-      "When an app\nwants too much."
+      "Behalte CPU-hungrige Apps unter Kontrolle",
+      "Keep CPU-hungry apps under control"
     ],
     "description": [
       "Gib CPU-hungrigen Apps ein Limit. Direkt aus der Menüleiste, für einzelne Prozesse oder mit einem gemeinsamen Budget für die gesamte App-Gruppe.",
@@ -116,8 +116,8 @@
     "name": "AutoPiP",
     "platform": "Safari / macOS",
     "title": [
-      "Tab wechseln.\nDas Video kommt mit.",
-      "Switch tabs.\nYour video comes with you."
+      "Schau weiter, während du in anderen Tabs arbeitest",
+      "Keep watching while you work in other tabs"
     ],
     "description": [
       "AutoPiP holt laufende Videos automatisch ins Bild-in-Bild, wenn du den Tab wechselst oder zu den Kommentaren scrollst. Wechselst du zurück, kehrt das Video in den Tab zurück.",
@@ -172,8 +172,8 @@
     "name": "ShortBlock",
     "platform": "Safari / macOS",
     "title": [
-      "YouTube.\nOhne die Shorts.",
-      "YouTube.\nWithout the Shorts."
+      "Mehr Platz für die Videos, die du sehen willst",
+      "More room for the videos you want to watch"
     ],
     "description": [
       "ShortBlock blendet YouTube Shorts in Navigation, Feeds, Suche und Empfehlungen aus. Direkte Shorts-Seiten führen zurück zur YouTube-Startseite.",
@@ -229,8 +229,8 @@
     "platform": "iPhone / iPad / Mac",
     "wip": true,
     "title": [
-      "Dein Komodo.\nAuf deinen Geräten.",
-      "Your Komodo.\nOn your devices."
+      "Dein Komodo auch unterwegs im Blick",
+      "Keep an eye on Komodo while you’re on the go"
     ],
     "description": [
       "Ein nativer Begleiter für deine selbst gehosteten Komodo-Umgebungen. Behalte Server, Stacks und Container im Blick und verwalte unterstützte Workloads unterwegs.",
@@ -287,8 +287,8 @@
     "wip": true,
     "local": true,
     "title": [
-      "Natürlich sprechen.\nFertig schreiben.",
-      "Speak naturally.\nGet ready-to-use text."
+      "Schreibe per Sprache direkt in deine Apps",
+      "Type into your apps using your voice"
     ],
     "description": [
       "Spracheingabe dort, wo dein Cursor wartet. stimmig setzt gesprochene Gedanken in Text um und kann Füllwörter, Grammatik und gesprochene Korrekturen lokal auf deinem Mac bereinigen.",

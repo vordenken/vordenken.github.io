@@ -1,3 +1,12 @@
+const header = document.querySelector('[data-site-header]');
+if (header) {
+  const updateHeaderHeight = () => {
+    document.documentElement.style.setProperty('--vd-header-height', `${Math.ceil(header.getBoundingClientRect().height)}px`);
+  };
+  updateHeaderHeight();
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(updateHeaderHeight).observe(header);
+}
+
 document.querySelectorAll('[data-demo]').forEach(demo => {
   const de = demo.dataset.language === 'de';
   const text = (german, english) => de ? german : english;

@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 
 const root = path.resolve(import.meta.dirname, '..');
 const out = path.join(root, 'dist');
@@ -8,6 +9,10 @@ const origin = (process.env.SITE_URL || 'https://vordenken.github.io').replace(/
 const base = (process.env.BASE_PATH || '').replace(/^\/?(.*?)\/?$/, '$1');
 const prefix = base ? '/' + base : '';
 const local = value => prefix + '/' + value.replace(/^\//, '');
+const assetVersions = new Map(await Promise.all(['site.css', 'site.js', 'entry.js'].map(async name => [
+  name, createHash('sha256').update(await fs.readFile(path.join(root, 'public/assets', name))).digest('hex').slice(0, 12)
+])));
+const asset = name => local('assets/' + name) + '?v=' + assetVersions.get(name);
 const absolute = value => origin + local(value);
 const escape = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const repo = app => 'https://github.com/vordenken/' + app.repo;
@@ -30,8 +35,11 @@ const uiIcon = name => {
 };
 
 function header(lang, current) {
-  const other = lang === 'de' ? 'en' : 'de';
-  return `<a class="vd-skip" href="#main">${copy(lang, 'Zum Inhalt', 'Skip to content')}</a><header class="vd-top vd-wrap"><a class="vd-logo" href="${route(lang)}" aria-label="${copy(lang, 'vordenken – alle Projekte', 'vordenken – all projects')}">vordenken.</a><nav class="vd-toplinks" aria-label="${copy(lang, 'Hauptnavigation', 'Main navigation')}"><a class="vd-quiet" href="${route(lang)}">${copy(lang, 'Alle Projekte', 'All projects')}</a>${external('https://ko-fi.com/vordenken', copy(lang, 'Unterstützen', 'Support'), 'vd-quiet')}<div class="vd-languages" aria-label="${copy(lang, 'Sprache', 'Language')}">${['de', 'en'].map(code => `<a href="${route(code, current)}" lang="${code}" hreflang="${code}"${code === lang ? ' aria-current="true"' : ''}>${code.toUpperCase()}</a>`).join('')}</div></nav></header><nav class="vd-appnav vd-wrap" aria-label="${copy(lang, 'Apps aus der Werkstatt', 'Apps from the workshop')}">${apps.map(app => `<a href="${route(lang, app.id)}"${current === app.id ? ' aria-current="page"' : ''}>${icon(app, true)}<span>${e(app.name)}</span>${app.wip ? `<span class="vd-sr">${copy(lang, 'In Arbeit', 'In development')}</span>` : ''}</a>`).join('')}</nav>`;
+  return `<a class="vd-skip" href="#main">${copy(lang, 'Zum Inhalt', 'Skip to content')}</a>
+<header class="vd-header" data-site-header>
+  <div class="vd-top vd-wrap"><a class="vd-logo" href="${route(lang)}" aria-label="${copy(lang, 'vordenken – alle Projekte', 'vordenken – all projects')}">vordenken.</a><nav class="vd-toplinks" aria-label="${copy(lang, 'Hauptnavigation', 'Main navigation')}"><a class="vd-quiet" href="${route(lang)}">${copy(lang, 'Alle Projekte', 'All projects')}</a>${external('https://ko-fi.com/vordenken', copy(lang, 'Unterstützen', 'Support'), 'vd-quiet')}<div class="vd-languages" aria-label="${copy(lang, 'Sprache', 'Language')}">${['de', 'en'].map(code => `<a href="${route(code, current)}" lang="${code}" hreflang="${code}"${code === lang ? ' aria-current="true"' : ''}>${code.toUpperCase()}</a>`).join('')}</div></nav></div>
+  <nav class="vd-appnav vd-wrap" aria-label="${copy(lang, 'Apps aus der Werkstatt', 'Apps from the workshop')}">${apps.map(app => `<a href="${route(lang, app.id)}"${current === app.id ? ' aria-current="page"' : ''}>${icon(app, true)}<span>${e(app.name)}</span>${app.wip ? `<span class="vd-sr">${copy(lang, 'In Arbeit', 'In development')}</span>` : ''}</a>`).join('')}</nav>
+</header>`;
 }
 
 function footer(lang) {
@@ -74,20 +82,16 @@ function spotlight(app, lang, home = false) {
   return `<section class="vd-spot" aria-label="${e(app.name)}"><div><div class="vd-identity">${icon(app)}<div><strong>${e(app.name)}${app.wip ? `<span class="vd-dev">${copy(lang, 'In Arbeit', 'In development')}</span>` : ''}</strong><div class="vd-platform">${e(app.platform)}</div></div></div><${home ? 'h2' : 'h1'}>${e(value(lang, app.title))}</${home ? 'h2' : 'h1'}><p>${e(value(lang, app.description))}</p><div class="vd-ctas">${primary}${secondary}</div><div class="vd-smallprint">${app.wip ? copy(lang, 'Entwicklungsvorschau · noch kein öffentlicher App-Release', 'Development preview · no public app release yet') : copy(lang, 'Kostenlos & Open Source', 'Free & open source')}</div></div><div class="vd-medium">${media(app, lang)}</div></section>`;
 }
 
-function related(app, lang) {
-  return `<section class="vd-related vd-wrap"><div class="vd-related-title"><h2>${copy(lang, 'Auch aus der Werkstatt', 'Also from the workshop')}</h2><a href="${route(lang)}">${copy(lang, 'Alle Projekte ansehen', 'See all projects')}</a></div><div class="vd-related-grid">${apps.filter(other => other.id !== app.id).map(other => `<a class="vd-other" href="${route(lang, other.id)}">${icon(other, true)}<strong>${e(other.name)}</strong><p>${e(value(lang, other.short))}</p>${other.wip ? `<small>${copy(lang, 'In Arbeit', 'In development')}</small>` : ''}</a>`).join('')}</div></section>`;
-}
-
 function appContent(app, lang) {
   const installNote = app.wip ? '' : `<p class="vd-install-note">${copy(lang, 'Falls macOS die App zunächst blockiert, findest du die aktuellen Installationshinweise im ', 'If macOS initially blocks the app, follow the current installation notes in the ')}${external(repo(app) + '#readme', 'README')}${copy(lang, ' des Projekts.', '.')}</p>`;
-  return `<div class="vd-breadcrumb vd-wrap"><a href="${route(lang)}">${copy(lang, 'Alle Projekte', 'All projects')}</a><span aria-hidden="true">/</span><span>${e(app.name)}</span></div>${spotlight(app, lang)}<section class="vd-section vd-wrap"><h2>${copy(lang, 'Was ' + e(app.name) + ' für dich übernimmt', 'What ' + e(app.name) + ' does for you')}</h2><div class="vd-benefits">${app.features.map(feature => `<div><h3>${e(copy(lang, feature[0], feature[1]))}</h3><p>${e(copy(lang, feature[2], feature[3]))}</p></div>`).join('')}</div><div class="vd-start" id="development"><div><h2>${app.wip ? copy(lang, 'Was gerade entsteht', 'What’s taking shape') : copy(lang, 'So legst du los', 'Get started')}</h2><ol>${app.steps.map(step => `<li>${e(value(lang, step))}</li>`).join('')}</ol>${installNote}</div><aside class="vd-requirements"><h3>${app.wip ? copy(lang, 'Gut zu wissen', 'Good to know') : copy(lang, 'Das brauchst du', 'What you’ll need')}</h3><p>${e(value(lang, app.requirements))}</p></aside></div></section>${related(app, lang)}`;
+  return `<div class="vd-breadcrumb vd-wrap"><a href="${route(lang)}">${copy(lang, 'Alle Projekte', 'All projects')}</a><span aria-hidden="true">/</span><span>${e(app.name)}</span></div>${spotlight(app, lang)}<section class="vd-section vd-wrap"><h2>${copy(lang, 'Was ' + e(app.name) + ' für dich übernimmt', 'What ' + e(app.name) + ' does for you')}</h2><div class="vd-benefits">${app.features.map(feature => `<div><h3>${e(copy(lang, feature[0], feature[1]))}</h3><p>${e(copy(lang, feature[2], feature[3]))}</p></div>`).join('')}</div><div class="vd-start" id="development"><div><h2>${app.wip ? copy(lang, 'Was gerade entsteht', 'What’s taking shape') : copy(lang, 'So legst du los', 'Get started')}</h2><ol>${app.steps.map(step => `<li>${e(value(lang, step))}</li>`).join('')}</ol>${installNote}</div><aside class="vd-requirements"><h3>${app.wip ? copy(lang, 'Gut zu wissen', 'Good to know') : copy(lang, 'Das brauchst du', 'What you’ll need')}</h3><p>${e(value(lang, app.requirements))}</p></aside></div></section>`;
 }
 
 function document({ lang, title, description, content, current = '', canonical = '', noindex = false }) {
   const url = absolute(canonical || lang + '/' + (current ? current + '/' : ''));
   const image = absolute('assets/icons/' + (apps.some(a => a.id === current) ? current : 'coretamer') + '.png');
   return `<!doctype html>
-<html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${e(title)}</title><meta name="description" content="${e(description)}"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#eee9f7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#24192e" media="(prefers-color-scheme: dark)">${noindex ? '<meta name="robots" content="noindex">' : ''}<link rel="canonical" href="${url}">${['de', 'en'].map(code => `<link rel="alternate" hreflang="${code}" href="${absolute(code + '/' + (current ? current + '/' : ''))}">`).join('')}<link rel="alternate" hreflang="x-default" href="${absolute('en/' + (current ? current + '/' : ''))}"><meta property="og:type" content="website"><meta property="og:site_name" content="vordenken"><meta property="og:title" content="${e(title)}"><meta property="og:description" content="${e(description)}"><meta property="og:url" content="${url}"><meta property="og:locale" content="${lang === 'de' ? 'de_DE' : 'en_US'}"><meta property="og:image" content="${image}"><meta name="twitter:card" content="summary"><link rel="icon" href="${local('assets/favicon.svg')}" type="image/svg+xml"><link rel="stylesheet" href="${local('assets/site.css')}"><script src="${local('assets/site.js')}" defer></script></head><body><div id="vd-workshop">${header(lang, current)}<main id="main">${content}</main>${footer(lang)}</div></body></html>\n`;
+<html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${e(title)}</title><meta name="description" content="${e(description)}"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#eee9f7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#24192e" media="(prefers-color-scheme: dark)">${noindex ? '<meta name="robots" content="noindex">' : ''}<link rel="canonical" href="${url}">${['de', 'en'].map(code => `<link rel="alternate" hreflang="${code}" href="${absolute(code + '/' + (current ? current + '/' : ''))}">`).join('')}<link rel="alternate" hreflang="x-default" href="${absolute('en/' + (current ? current + '/' : ''))}"><meta property="og:type" content="website"><meta property="og:site_name" content="vordenken"><meta property="og:title" content="${e(title)}"><meta property="og:description" content="${e(description)}"><meta property="og:url" content="${url}"><meta property="og:locale" content="${lang === 'de' ? 'de_DE' : 'en_US'}"><meta property="og:image" content="${image}"><meta name="twitter:card" content="summary"><link rel="icon" href="${local('assets/favicon.svg')}" type="image/svg+xml"><link rel="stylesheet" href="${asset('site.css')}"><script src="${asset('site.js')}" defer></script></head><body><div id="vd-workshop">${header(lang, current)}<main id="main">${content}</main>${footer(lang)}</div></body></html>\n`;
 }
 
 async function write(relative, content) {
@@ -96,17 +100,18 @@ async function write(relative, content) {
   await fs.writeFile(file, content);
 }
 
-function redirect(target, name) {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="refresh" content="0;url=${e(target)}"><title>${e(name)} · vordenken</title><link rel="canonical" href="${origin + target}"><meta name="robots" content="noindex"><link rel="stylesheet" href="${local('assets/site.css')}"></head><body><main class="vd-redirect"><h1>${e(name)}</h1><p><a href="${e(target)}">Continue in English</a></p><p><a href="${e(target.replace('/en/', '/de/'))}">Auf Deutsch öffnen</a></p></main></body></html>\n`;
+function languageEntry(target, name) {
+  const german = target.replace('/en/', '/de/');
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${e(name)} · vordenken</title><link rel="canonical" href="${origin + target}"><meta name="robots" content="noindex"><link rel="stylesheet" href="${asset('site.css')}"><script type="module" src="${asset('entry.js')}"></script></head><body><main class="vd-redirect" data-language-entry data-de="${e(german)}" data-en="${e(target)}"><h1>${e(name)}</h1><p>Choose your language / Sprache wählen</p><div class="vd-entry-links"><a href="${e(german)}" lang="de" hreflang="de">Deutsch</a><a href="${e(target)}" lang="en" hreflang="en">English</a></div></main></body></html>\n`;
 }
 
 await fs.rm(out, { recursive: true, force: true });
 await fs.cp(path.join(root, 'public'), out, { recursive: true });
 const sitemap = [];
 for (const lang of ['de', 'en']) {
-  const title = copy(lang, 'vordenken · Kleine Ideen. Gute Werkzeuge.', 'vordenken · Small ideas. Useful tools.');
+  const title = copy(lang, 'vordenken · Open-Source-Apps für deinen Alltag', 'vordenken · Open-source apps for everyday use');
   const description = copy(lang, 'Native Open-Source-Apps für Mac, Safari, iPhone und iPad. Entdecke Silentio, CoreTamer, AutoPiP, ShortBlock, Varan und stimmig.', 'Native open-source apps for Mac, Safari, iPhone, and iPad. Discover Silentio, CoreTamer, AutoPiP, ShortBlock, Varan, and stimmig.');
-  const content = `<div class="vd-home-intro vd-wrap"><h1 class="vd-home-title">${copy(lang, 'Kleine Ideen.\nGute Werkzeuge.', 'Small ideas.\nUseful tools.')}</h1><p>${copy(lang, 'Native Open-Source-Apps für deinen Mac, Safari und darüber hinaus. Entdecke, was schon da ist – und was gerade entsteht.', 'Native open-source apps for your Mac, Safari, and beyond. Discover what’s ready to use and what’s taking shape.')}</p></div><div class="vd-home-modules">${apps.map(app => spotlight(app, lang, true)).join('')}</div>`;
+  const content = `<div class="vd-home-intro vd-wrap"><h1 class="vd-home-title">${copy(lang, 'Open-Source-Apps für deinen Alltag', 'Open-source apps for everyday use')}</h1><p>${copy(lang, 'Native Open-Source-Apps für deinen Mac, Safari und darüber hinaus. Entdecke, was schon da ist – und was gerade entsteht.', 'Native open-source apps for your Mac, Safari, and beyond. Discover what’s ready to use and what’s taking shape.')}</p></div><div class="vd-home-modules">${apps.map(app => spotlight(app, lang, true)).join('')}</div>`;
   await write(lang + '/index.html', document({ lang, title, description, content }));
   sitemap.push(lang + '/');
   for (const app of apps) {
@@ -118,8 +123,8 @@ for (const lang of ['de', 'en']) {
   await write(lang + '/privacy/index.html', document({ lang, current: 'privacy', title: privacyTitle + ' · vordenken', description: copy(lang, 'Datenschutzhinweise für die vordenken-Werkstatt.', 'Privacy information for the vordenken workshop.'), content: privacyContent }));
   sitemap.push(lang + '/privacy/');
 }
-await write('index.html', redirect(route('en'), 'vordenken'));
-for (const app of apps) await write(app.id + '/index.html', redirect(route('en', app.id), app.name));
+await write('index.html', languageEntry(route('en'), 'vordenken'));
+for (const app of apps) await write(app.id + '/index.html', languageEntry(route('en', app.id), app.name));
 await write('404.html', document({ lang: 'en', title: 'Page not found · vordenken', description: 'Find all apps from the vordenken workshop.', canonical: '404.html', noindex: true, content: `<article class="vd-prose vd-wrap"><h1>This page isn’t here.</h1><p>Find the app you’re looking for in the workshop.</p><p><a href="${route('en')}">All projects in English</a></p><p><a href="${route('de')}">Alle Projekte auf Deutsch</a></p></article>` }));
 await write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${sitemap.map(url => `<url><loc>${e(absolute(url))}</loc></url>`).join('')}</urlset>\n`);
 await write('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${absolute('sitemap.xml')}\n`);

@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import assert from 'node:assert/strict';
+import { preferredLanguage } from '../public/assets/entry.js';
 
 const root = path.resolve(import.meta.dirname, '..');
 const dist = path.join(root, 'dist');
@@ -63,20 +64,43 @@ for (const lang of ['de', 'en']) {
   for (const app of apps) {
     const html = await fs.readFile(path.join(dist, lang, app.id, 'index.html'), 'utf8');
     assert.equal((html.match(/<h1>/g) || []).length, 1, `App page must have one h1: ${app.id}`);
-    assert.equal((html.match(/class="vd-other"/g) || []).length, 5, `App page must link to five peers: ${app.id}`);
+    assert.ok(!html.includes('vd-related'), `Related-app section must be omitted: ${app.id}`);
+    const header = html.match(/<header\b[\s\S]*?<\/header>/)?.[0] || '';
+    const appNav = header.match(/<nav class="vd-appnav[\s\S]*?<\/nav>/)?.[0] || '';
+    for (const peer of apps) assert.ok(appNav.includes(`href="${prefix}/${lang}/${peer.id}/"`), `Header must retain ${peer.name} on ${app.id}`);
+    assert.ok(appNav.includes(`href="${prefix}/${lang}/${app.id}/" aria-current="page"`), 'Header must identify the current app');
     assert.ok(html.includes(`href="${prefix}/${lang === 'de' ? 'en' : 'de'}/${app.id}/"`), 'Language switch must preserve the app');
     assert.ok(html.includes(`hreflang="${lang === 'de' ? 'en' : 'de'}"`), 'Missing language alternate');
+    assert.ok(!html.includes('assets/entry.js'), 'Explicit language pages must not auto-redirect');
     if (app.wip) assert.ok(!html.includes('/releases/latest'), `Preview must not offer a release: ${app.id}`);
     else assert.ok(html.includes(`https://github.com/vordenken/${app.repo}/releases/latest`), `Missing download: ${app.id}`);
     if (app.local) assert.ok(!html.includes('https://github.com/vordenken/stimmig'), 'Do not advertise the empty source repository');
   }
 }
 
-for (const app of apps) {
-  const html = await fs.readFile(path.join(dist, app.id, 'index.html'), 'utf8');
-  assert.ok(html.includes(`0;url=${prefix}/en/${app.id}/`), `Wrong short entry: ${app.id}`);
-  assert.ok(html.includes(`href="${prefix}/en/${app.id}/"`), 'Entry needs a fallback link');
+for (const id of ['', ...apps.map(app => app.id)]) {
+  const html = await fs.readFile(path.join(dist, id, 'index.html'), 'utf8');
+  const suffix = id ? id + '/' : '';
+  assert.ok(!html.includes('http-equiv="refresh"'), 'Entries must not force English before browser-language selection');
+  assert.ok(html.includes(`data-de="${prefix}/de/${suffix}"`), `Missing German entry target: ${id}`);
+  assert.ok(html.includes(`data-en="${prefix}/en/${suffix}"`), `Missing English entry target: ${id}`);
+  assert.ok(html.includes(`href="${prefix}/de/${suffix}"`) && html.includes(`href="${prefix}/en/${suffix}"`), 'Entries need both no-JavaScript language links');
+  assert.ok(html.includes(`type="module" src="${prefix}/assets/entry.js?v=`), 'Entry must load versioned browser-language routing');
 }
+
+for (const [languages, expected] of [
+  [['de-DE', 'en-US'], 'de'],
+  [['de-AT'], 'de'],
+  [['de-CH'], 'de'],
+  [['DE-de'], 'de'],
+  [['en-GB', 'de-DE'], 'en'],
+  [['fr-FR', 'de-DE', 'en'], 'de'],
+  [['fr-FR', 'en-US', 'de-DE'], 'en'],
+  [['fr-FR', 'es-ES'], 'en'],
+  [[], 'en'],
+  [[null, 'de-DE'], 'de'],
+  [undefined, 'en']
+]) assert.equal(preferredLanguage(languages), expected, `Wrong language for ${JSON.stringify(languages)}`);
 
 const cssFile = path.join(dist, 'assets/site.css');
 const css = await fs.readFile(cssFile, 'utf8');

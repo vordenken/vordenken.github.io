@@ -166,3 +166,22 @@ body{margin:0}
 #vd-workshop .is-muted .vd-audio-output{background:#e3ece4}
 @media(max-width:600px){#vd-workshop .vd-recording video{height:290px}#vd-workshop .vd-related-title>a{max-width:80px}#vd-workshop .vd-appnav a{flex-direction:column;gap:4px;white-space:nowrap;min-height:57px;padding:7px 2px}#vd-workshop .vd-prose h1{font-size:35px}#vd-workshop .vd-prose p{font-size:14px}}
 @media(pointer:coarse){#vd-workshop .vd-languages a{min-height:40px;min-width:34px;display:flex;align-items:center;justify-content:center}#vd-workshop .vd-tabs button,#vd-workshop .vd-demo-button{min-height:44px}#vd-workshop .vd-feedbar button{min-height:36px}}
+
+/* Keep project discovery in one shared navigation, including on short app pages. */
+:root{--vd-header-height:134px;scroll-padding-top:calc(var(--vd-header-height) + 12px)}
+#vd-workshop .vd-header{position:sticky;top:0;z-index:20;background:var(--vd-bg);border-bottom:1px solid var(--vd-line)}
+#vd-workshop .vd-header .vd-top{min-height:66px}
+#vd-workshop .vd-header .vd-appnav{padding-bottom:12px}
+#vd-workshop .vd-breadcrumb,#vd-workshop .vd-home-intro{border-top:0}
+#vd-workshop .vd-bottom{margin-top:24px}
+#vd-workshop .vd-skip{z-index:30}
+.vd-entry-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.vd-entry-links a{display:inline-block;padding:10px 18px;border:1px solid currentColor;border-radius:8px;text-underline-offset:4px}
+@media(max-width:600px){
+  :root{--vd-header-height:152px}
+  #vd-workshop .vd-header .vd-top{min-height:62px}
+  #vd-workshop .vd-header .vd-logo{font-size:25px}
+  #vd-workshop .vd-header .vd-appnav{gap:4px;padding-bottom:10px}
+  #vd-workshop .vd-header .vd-appnav a{min-height:34px;padding:7px 3px;font-size:12px;line-height:1.25;flex-direction:row}
+  #vd-workshop .vd-header .vd-appnav img{display:none}
+}

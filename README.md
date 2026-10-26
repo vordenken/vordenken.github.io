@@ -25,6 +25,7 @@ npm run check
 - `scripts/build.mjs`: generates HTML, language variants, app entry points, sitemap, and 404 page.
 - `public/assets/site.css`: the shared workshop design.
 - `public/assets/site.js`: progressive enhancement for the three labeled interactive sketches.
+- `public/assets/entry.js`: browser-language routing on the root and short app entry pages.
 - `public/assets/icons/`: existing app icons.
 - `public/assets/images/`: existing real app screenshots.
 - `docs/media-plan.md`: planned product recordings and how to add them.
@@ -33,9 +34,11 @@ The generated `dist/` directory is ignored. GitHub Actions builds and checks it 
 
 ## Stable links for repositories
 
-Use `https://vordenken.github.io/autopip/`, or the corresponding app slug. These static entry pages lead to the English app page. The language links switch between the same app under `/en/` and `/de/`. All content and navigation are rendered as HTML: direct links and the browser back button work without a client-side router.
+Use `https://vordenken.github.io/autopip/`, or the corresponding app slug. On these short entry pages and the root, the first supported language in the browser's preference list determines the destination: German or English, with English as the fallback. Explicit `/de/` and `/en/` URLs are never redirected based on browser preferences. The language links switch between the same app under `/en/` and `/de/`.
 
-GitHub Pages cannot return custom server redirects for arbitrary routes. The short entry pages therefore use an HTML refresh, a canonical link, and an ordinary fallback link. No redirect depends on browser language or a saved preference.
+GitHub Pages cannot choose a language on the server. The short entries therefore use a small local script with `location.replace`, preserving query strings and anchors. Without JavaScript, visitors can choose Deutsch or English on the entry page. No language preference is stored. All localized content and navigation remain rendered as HTML; direct links and the browser back button work without a client-side router.
+
+The header keeps all six apps and the language controls visible while scrolling. On mobile it uses a compact text-only app list. The redundant related-app section at the bottom of app pages is omitted. Anchor scrolling accounts for the actual header height.
 
 `SITE_URL` and `BASE_PATH` can be supplied to the build for another domain or a project-site preview. Defaults are `https://vordenken.github.io` and an empty base path.
 
